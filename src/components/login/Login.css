@@ -1,123 +1,82 @@
-/* CONTAINER */
+/* =========================
+   RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================
+   CONTAINER
+========================= */
 
 .container {
   width: 100%;
   min-height: 100vh;
-
   display: flex;
-  flex-wrap: wrap;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
 }
 
-/* LEFT SIDE */
+/* =========================
+   LEFT SIDE
+========================= */
 
 .left-side {
-  width: 50%;
-  min-height: 100vh;
-
-  background: #ffffff;
-
+  width: 45%;
+  background: #00b300;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 5%;
-
+  padding: 60px;
   position: relative;
 }
 
 .hero-content {
-  width: 100%;
-  max-width: 500px;
-}
-
-.hero-line {
-  width: 80px;
-  height: 5px;
-
-  background: #008000;
-
-  border-radius: 20px;
-
-  margin-bottom: 20px;
-}
-
-.hero-content h1 {
-  font-size: clamp(2.5rem, 5vw, 5rem);
+  max-width: 420px;
   color: #008000;
 }
 
+.hero-line {
+  width: 90px;
+  height: 8px;
+  background: #1ac21a;
+  border-radius: 10px;
+  margin-bottom: 7px;
+}
+
+.hero-content h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
 .hero-content h1 span {
-  color: #00b33c;
+  color: #1ac21a;
 }
 
 .hero-content p {
-  margin-top: 20px;
-
-  line-height: 1.6;
-
-  color: #555;
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.95;
+  color: black;
 }
 
-/* DECORAÇÕES */
-
-.grid-decoration {
-  position: absolute;
-
-  top: 30px;
-  left: 30px;
-
-  display: grid;
-  grid-template-columns: repeat(3, 12px);
-
-  gap: 10px;
-}
-
-.grid-decoration span {
-  width: 12px;
-  height: 12px;
-
-  background: #1f0add;
-
-  border-radius: 3px;
-}
-
-.floating-shapes div {
-  position: absolute;
-
-  border: 2px solid #ff0000;
-
-  border-radius: 20px;
-}
-
-.floating-shapes div:first-child {
-  width: 80px;
-  height: 80px;
-
-  left: 20px;
-  bottom: 80px;
-}
-
-.floating-shapes div:last-child {
-  width: 50px;
-  height: 50px;
-
-  left: 80px;
-  bottom: 20px;
-}
-
-/* RIGHT SIDE */
+/* =========================
+   RIGHT SIDE
+========================= */
 
 .right-side {
-  width: 50%;
-  min-height: 100vh;
-
-  background: #800000;
+  width: 70%;
+  background: #f5f7fb;
 
   display: flex;
-  align-items: center;
   justify-content: center;
-
-  padding: 5%;
+  align-items: center;
+  padding: 25px;
 
   position: relative;
 }
@@ -125,75 +84,67 @@
 .overlay {
   position: absolute;
   inset: 0;
-
-  background: rgba(255, 255, 255, 0.03);
 }
 
-/* CARD */
+/* =========================
+   CARD
+========================= */
 
 .login-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 500px;
 
   background: white;
+  padding: 25px;
 
-  border-radius: 20px;
-
-  padding: 40px;
-
+  border-radius: 28px;
+  
   position: relative;
   z-index: 2;
-
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-.login-card h2 {
-  text-align: center;
-
-  color: #008000;
-
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  text-align: center;
-
-  color: black;
-
+.login-header {
   margin-bottom: 25px;
 }
 
-/* FORM */
+.login-header h2 {
+  font-size: 2rem;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.login-header p {
+  color: #000000;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   FORM
+========================= */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
 .input-group {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .input-group label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-size: 0.9rem;
-  font-weight: bold;
-
-  color: #008000;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #E2E8F0;
 }
 
 .input-wrapper {
-  width: 100%;
-  height: 50px;
-
-  display: flex;
-  align-items: center;
-
-  border: 2px solid #ddd;
-
-  border-radius: 12px;
-
-  padding: 0 15px;
-
-  background: #E2E8F0;
+  position: relative;
+  color: #00ff00;
 }
 
 .input-wrapper:focus-within {
@@ -202,25 +153,42 @@
 
 .input-wrapper input {
   width: 100%;
+  height: 52px;
 
   border: none;
   outline: none;
 
-  background: transparent;
+  padding: 0 45px 0 16px;
 
-  font-size: 1rem;
+  background: #eef2f7;
+
+  border-radius: 12px;
+
+  font-size: 0.95rem;
+  color: #271124;
+}
+
+.input-wrapper input::placeholder {
+  color: #9ca3af;
 }
 
 .eye-button {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background: none;
   border: none;
-  background: transparent;
 
   cursor: pointer;
 
-  color: #777;
+  color: #6b7280;
 }
 
-/* OPTIONS */
+/* =========================
+   OPTIONS
+========================= */
 
 .options-row {
   display: flex;
@@ -229,43 +197,47 @@
 
   gap: 10px;
 
-  margin-bottom: 20px;
+  font-size: 0.9rem;
 }
 
 .remember-me {
   display: flex;
   align-items: center;
-
   gap: 5px;
+  color: #008000;
+}
+
+input[type="checkbox"] {
+  accent-color: #008000;
+
 }
 
 .options-row a {
+  color: #1ac21a;
   text-decoration: none;
-
-  color: #16c533;
+  font-weight: 600;
 }
 
-.options-row a:hover {
+.options-row a:hover{
   color: #008000;
-  font-weight: bold;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
 
 .login-button {
   width: 100%;
   height: 50px;
-
+  
   border: none;
-
   border-radius: 12px;
 
-  background: #16c533;
-
-  color: white;
+  background: #1ac21a;
+  color: #ffffff;
 
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
 
   cursor: pointer;
 }
@@ -274,83 +246,91 @@
   background: #008000;
 }
 
-/* DIVIDER */
+/* =========================
+   DIVIDER
+========================= */
 
 .divider {
   display: flex;
   align-items: center;
+  gap: 12px;
 
-  gap: 10px;
-
-  margin: 25px 0;
-
-  color: #777;
+  margin: 20px 0 18px;
 }
 
 .divider span {
   flex: 1;
   height: 1px;
-
-  background: #ddd;
+  background: #d1d5db;
 }
 
-/* REGISTER */
+.divider p {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* =========================
+   REGISTER
+========================= */
 
 .register-text {
   text-align: center;
-
-  color: gray;
+  font-size: 0.95rem;
+  color: #374151;
 }
 
 .register-text a {
-  color: #16c533;
-
-  font-weight: bold;
-
+  color: #1ac21a;
+  font-weight: 700;
   text-decoration: none;
 }
 
 .register-text a:hover {
-  color:  #008000;
+  color: #008000;
 }
 
-/* RESPONSIVO */
+@media (max-width: 420px) {
 
-@media (max-width: 900px) {
+  .left-side {
+    min-height: 100px; /* reduz mais a área branca */
+    padding: 14px;
 
-  .container {
-    flex-direction: column;
-  }
-
-  .left-side,
-  .right-side {
-    width: 100%;
-    min-height: auto;
-  }
-}
-
-@media (max-width: 600px) {
-
-  .left-side,
-  .right-side {
-    padding: 30px 20px;
-  }
-
-  .login-card {
-    padding: 25px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
   }
 
   .hero-content h1 {
-    font-size: 2.2rem;
+    font-size: 1.4rem;
   }
 
-  .options-row {
-    flex-direction: column;
-    align-items: flex-start;
+  .right-side {
+    padding: 14px 12px 26px;
   }
 
-  .grid-decoration,
-  .floating-shapes {
-    display: none;
+  .login-card {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  .input-wrapper input {
+    height: 44px;
+    font-size: 0.88rem;
+  }
+
+  .login-button {
+    height: 44px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .left-side {
+    min-height: 130px; /* menor que antes */
+    padding: 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.9rem;
   }
 }
