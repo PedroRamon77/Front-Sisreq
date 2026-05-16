@@ -1,0 +1,326 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #f4f4f4;
+  color: #222;
+}
+
+/* =========================
+   PÁGINA
+========================= */
+
+.requerimento-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 40px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================
+   LINK VOLTAR
+========================= */
+
+.back-link {
+  width: 100%;
+  max-width: 900px;
+
+  margin-bottom: 20px;
+}
+
+.back-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  text-decoration: none;
+
+  color: #008000;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.back-link a:hover {
+  color: #00b33c;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.requerimento-card {
+  width: 100%;
+  max-width: 900px;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 35px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.form-header {
+  margin-bottom: 30px;
+}
+
+.form-title {
+  font-size: 2rem;
+  color: #008000;
+
+  margin-bottom: 10px;
+}
+
+.form-subtitle {
+  color: #666;
+  line-height: 1.5;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group.full {
+  grid-column: span 2;
+}
+
+.input-label {
+  margin-bottom: 8px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  color: #008000;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+
+  border: 2px solid #dcdcdc;
+  border-radius: 12px;
+
+  padding: 12px 14px;
+
+  font-size: 1rem;
+
+  background: #fff;
+
+  outline: none;
+
+  transition: 0.2s;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #00b33c;
+}
+
+.input:disabled {
+  background: #f1f1f1;
+  color: #777;
+}
+
+.textarea {
+  min-height: 130px;
+
+  resize: vertical;
+}
+
+/* =========================
+   UPLOAD
+========================= */
+
+.upload-area {
+  width: 100%;
+
+  border: 2px dashed #00b33c;
+  border-radius: 15px;
+
+  padding: 25px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  background: #fafafa;
+}
+
+.upload-area:hover {
+  background: #f1fff4;
+}
+
+.upload-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.upload-icon {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  background: #e9fbe9;
+  color: #008000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-title {
+  font-weight: 600;
+  color: #222;
+}
+
+.upload-subtitle {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+.form-actions {
+  margin-top: 30px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.btn-cancelar,
+.btn-enviar {
+  height: 45px;
+
+  padding: 0 22px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 0.95rem;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+/* CANCELAR */
+
+.btn-cancelar {
+  background: #ececec;
+  color: #444;
+}
+
+.btn-cancelar:hover {
+  background: #dcdcdc;
+}
+
+/* ENVIAR */
+
+.btn-enviar {
+  background: #008000;
+  color: #fff;
+}
+
+.btn-enviar:hover {
+  background: #00a63a;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 768px) {
+  .requerimento-page {
+    padding: 20px 15px;
+  }
+
+  .requerimento-card {
+    padding: 25px 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .input-group.full {
+    grid-column: span 1;
+  }
+
+  .form-title {
+    font-size: 1.7rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancelar,
+  .btn-enviar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .requerimento-card {
+    border-radius: 15px;
+    padding: 20px 15px;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+  }
+
+  .input,
+  .select,
+  .textarea {
+    font-size: 0.9rem;
+  }
+
+  .upload-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
