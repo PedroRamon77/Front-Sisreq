@@ -1,23 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import api from '../../services/api'
 import './NovoRequerimento.css'
-
-/* =========================
-   ÍCONES
-========================= */
 
 function ArrowLeftIcon() {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <line x1="19" y1="12" x2="5" y2="12" />
       <polyline points="12 19 5 12 12 5" />
     </svg>
@@ -25,25 +13,12 @@ function ArrowLeftIcon() {
 }
 
 const UploadIcon = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
     <polyline points="17 8 12 3 7 8" />
     <line x1="12" y1="3" x2="12" y2="15" />
   </svg>
 )
-
-/* =========================
-   COMPONENTE
-========================= */
 
 export default function NovoRequerimento() {
   const navigate = useNavigate()
@@ -52,21 +27,49 @@ export default function NovoRequerimento() {
   const [tipo, setTipo] = useState('')
   const [descricao, setDescricao] = useState('')
   const [anexo, setAnexo] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const usuarioSalvo = localStorage.getItem('usuario')
+  const usuario = usuarioSalvo ? JSON.parse(usuarioSalvo) : null
 
   const handleCancelar = () => {
     navigate('/dashboard')
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert('Requerimento enviado com sucesso!')
-    // Opcional: redirecionar após envio
-    // navigate('/dashboard')
+
+    try {
+      setLoading(true)
+
+      const formData = new FormData()
+
+      formData.append('tipo', tipo)
+      formData.append('descricao', descricao)
+      formData.append('semestreAtual', semestre)
+      formData.append('cursoAtual', curso)
+
+      if (anexo) {
+        formData.append('anexos', anexo)
+      }
+
+      await api.post('/requerimentos', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      alert('Requerimento enviado com sucesso!')
+      navigate('/dashboard')
+    } catch (error) {
+      alert(error.response?.data?.erro || 'Erro ao enviar requerimento')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <div className="requerimento-page">
-      {/* VOLTAR */}
       <div className="back-link">
         <Link to="/dashboard">
           <ArrowLeftIcon />
@@ -74,9 +77,7 @@ export default function NovoRequerimento() {
         </Link>
       </div>
 
-      {/* CARD */}
       <div className="requerimento-card">
-        {/* HEADER */}
         <div className="form-header">
           <h1 className="form-title">
             Novo Requerimento
@@ -88,11 +89,8 @@ export default function NovoRequerimento() {
           </p>
         </div>
 
-        {/* FORM */}
         <form onSubmit={handleSubmit}>
-          {/* GRID */}
           <div className="form-grid">
-            {/* MATRÍCULA */}
             <div className="input-group">
               <label className="input-label">
                 Matrícula (Auto)
@@ -101,12 +99,11 @@ export default function NovoRequerimento() {
               <input
                 type="text"
                 className="input"
-                value="202610800XX"
+                value={usuario?.matricula || ''}
                 disabled
               />
             </div>
 
-            {/* SEMESTRE */}
             <div className="input-group">
               <label className="input-label">
                 Semestre Atual
@@ -118,10 +115,10 @@ export default function NovoRequerimento() {
                 placeholder="Ex: 2026.1"
                 value={semestre}
                 onChange={(e) => setSemestre(e.target.value)}
+                required
               />
             </div>
 
-            {/* CURSO ATUAL – SELECT */}
             <div className="input-group full">
               <label className="input-label">
                 Curso Atual
@@ -157,7 +154,6 @@ export default function NovoRequerimento() {
               </select>
             </div>
 
-            {/* TIPO DE SOLICITAÇÃO – SELECT */}
             <div className="input-group full">
               <label className="input-label">
                 Tipo de solicitação
@@ -190,7 +186,6 @@ export default function NovoRequerimento() {
               </select>
             </div>
 
-            {/* DESCRIÇÃO */}
             <div className="input-group full">
               <label className="input-label">
                 Descrição Detalhada
@@ -201,10 +196,10 @@ export default function NovoRequerimento() {
                 placeholder="Explique o motivo da sua solicitação."
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
+                required
               />
             </div>
 
-            {/* UPLOAD */}
             <div className="input-group full">
               <label className="input-label">
                 Anexos Comprobatórios
@@ -228,6 +223,7 @@ export default function NovoRequerimento() {
                     <p className="upload-title">
                       {anexo ? anexo.name : 'Clique para anexar arquivos'}
                     </p>
+
                     {!anexo && (
                       <span className="upload-subtitle">
                         PDF, PNG ou JPG
@@ -239,7 +235,6 @@ export default function NovoRequerimento() {
             </div>
           </div>
 
-          {/* BOTÕES */}
           <div className="form-actions">
             <button
               type="button"
@@ -252,8 +247,9 @@ export default function NovoRequerimento() {
             <button
               type="submit"
               className="btn-enviar"
+              disabled={loading}
             >
-              Enviar Solicitação
+              {loading ? 'Enviando...' : 'Enviar Solicitação'}
             </button>
           </div>
         </form>

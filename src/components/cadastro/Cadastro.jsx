@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import api from '../../services/api'
 import './Cadastro.css'
 
 const UserPlusIcon = () => (
@@ -37,101 +38,119 @@ export default function Cadastro() {
   const [showConfirmarSenha, setShowConfirmarSenha] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setTimeout(() => {
+  const navigate = useNavigate()
+
+  const converterTipoPerfil = () => {
+    if (tipoPerfil === 'aluno') return 'ALUNO'
+    if (tipoPerfil === 'servidor') return 'SERVIDOR'
+    return 'ADMIN'
+  }
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault()
+
+    if (loading) return
+
+    if (senha !== confirmarSenha) {
+      alert('As senhas não coincidem')
+      return
+    }
+
+    try {
+      setLoading(true)
+
+      const response = await api.post('/auth/cadastro', {
+        nome,
+        email,
+        senha,
+        tipo: converterTipoPerfil(),
+        matricula,
+      })
+
+      alert(response.data.mensagem || 'Usuário cadastrado com sucesso')
+
+      navigate('/')
+    } catch (error) {
+      alert(error.response?.data?.erro || 'Erro ao cadastrar')
+    } finally {
       setLoading(false)
-      alert('Solicitação de registro enviada (simulação)')
-    }, 1500)
+    }
   }
 
   return (
     <main className="container">
-      <section className="left-side" aria-label="Marca e descrição">
-        <div className="grid-decoration" aria-hidden="true">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <span key={i} />
-          ))}
-        </div>
-
+      <section className="left-side">
         <div className="hero-content">
-          <div className="hero-line" aria-hidden="true" />
-          <h1>Sis<span>Req.</span></h1>
+          <div className="hero-line" />
+
+          <h1>
+            Sis<span>Req.</span>
+          </h1>
+
           <p>
             A nova era da gestão acadêmica no IFCE Cedro.
-            Eficiência, transparência e tecnologia em um único ecossistema.
+            Eficiência, transparência e tecnologia
+            em um único ecossistema.
           </p>
-        </div>
-
-        <div className="floating-shapes" aria-hidden="true">
-          <div />
-          <div />
         </div>
       </section>
 
-      <section className="right-side" aria-label="Formulário de cadastro">
-        <div className="overlay" aria-hidden="true" />
-
+      <section className="right-side">
         <div className="cadastro-card">
-          <div className="cadastro-icon" aria-hidden="true">
+
+          <div className="cadastro-icon">
             <UserPlusIcon />
           </div>
 
           <h2>Criar Conta</h2>
-          <p className="subtitle">Preencha os dados para ingressar no SisReq.</p>
 
-          <form onSubmit={handleSubmit} noValidate>
+          <p className="subtitle">
+            Preencha os dados para ingressar no SisReq.
+          </p>
+
+          <form>
+
             <div className="input-group">
-              <label htmlFor="nome">Nome completo</label>
+              <label>Nome completo</label>
+
               <div className="input-wrapper">
                 <input
-                  id="nome"
                   type="text"
-                  placeholder="Ex: Lucas Pereira de Souza"
+                  placeholder="Ex: Lucas Pereira"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
-                  required
-                  aria-required="true"
-                  autoComplete="name"
                 />
               </div>
             </div>
 
             <div className="input-group">
-              <label htmlFor="email">E-mail</label>
+              <label>E-mail</label>
+
               <div className="input-wrapper">
                 <input
-                  id="email"
                   type="email"
                   placeholder="nome@ifce.edu.br"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
-                  aria-required="true"
-                  autoComplete="email"
                 />
               </div>
             </div>
 
             <div className="input-group">
-              <label htmlFor="senha">Senha</label>
+              <label>Senha</label>
+
               <div className="input-wrapper">
                 <input
-                  id="senha"
                   type={showSenha ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={senha}
                   onChange={(e) => setSenha(e.target.value)}
-                  required
-                  aria-required="true"
-                  autoComplete="new-password"
                 />
+
                 <button
                   type="button"
                   className="eye-button"
-                  onClick={() => setShowSenha((prev) => !prev)}
-                  aria-label={showSenha ? 'Ocultar senha' : 'Mostrar senha'}
+                  onClick={() => setShowSenha(!showSenha)}
                 >
                   {showSenha ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
@@ -139,82 +158,95 @@ export default function Cadastro() {
             </div>
 
             <div className="input-group">
-              <label htmlFor="confirmar-senha">Confirmar senha</label>
+              <label>Confirmar senha</label>
+
               <div className="input-wrapper">
                 <input
-                  id="confirmar-senha"
                   type={showConfirmarSenha ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={confirmarSenha}
                   onChange={(e) => setConfirmarSenha(e.target.value)}
-                  required
-                  aria-required="true"
-                  autoComplete="new-password"
                 />
+
                 <button
                   type="button"
                   className="eye-button"
-                  onClick={() => setShowConfirmarSenha((prev) => !prev)}
-                  aria-label={showConfirmarSenha ? 'Ocultar senha' : 'Mostrar senha'}
+                  onClick={() => setShowConfirmarSenha(!showConfirmarSenha)}
                 >
                   {showConfirmarSenha ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
               </div>
             </div>
 
-            <fieldset className="input-group perfil-group">
-              <legend>Tipo de perfil</legend>
+            <div className="input-group">
+              <label>Tipo de perfil</label>
+
               <div className="perfil-options">
-                {['aluno', 'administrativo', 'servidor'].map((perfil) => (
-                  <label
-                    key={perfil}
-                    className={`perfil-option ${tipoPerfil === perfil ? 'selecionado' : ''}`}
-                  >
-                    <input
-                      type="radio"
-                      name="tipoPerfil"
-                      value={perfil}
-                      checked={tipoPerfil === perfil}
-                      onChange={() => setTipoPerfil(perfil)}
-                    />
-                    <span>
-                      {perfil === 'aluno' ? 'Aluno' :
-                       perfil === 'administrativo' ? 'Administrativo' : 'Servidor'}
-                    </span>
-                  </label>
-                ))}
+
+                <label>
+                  <input
+                    type="radio"
+                    checked={tipoPerfil === 'aluno'}
+                    onChange={() => setTipoPerfil('aluno')}
+                  />
+                  Aluno
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    checked={tipoPerfil === 'administrativo'}
+                    onChange={() => setTipoPerfil('administrativo')}
+                  />
+                  Administrativo
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    checked={tipoPerfil === 'servidor'}
+                    onChange={() => setTipoPerfil('servidor')}
+                  />
+                  Servidor
+                </label>
+
               </div>
-            </fieldset>
+            </div>
 
             <div className="input-group">
-              <label htmlFor="matricula">Matrícula</label>
+              <label>Matrícula</label>
+
               <div className="input-wrapper">
                 <input
-                  id="matricula"
                   type="text"
                   placeholder="Ex: 2023XXXXXXX"
                   value={matricula}
                   onChange={(e) => setMatricula(e.target.value)}
-                  required
-                  aria-required="true"
                 />
               </div>
             </div>
 
             <button
               className="cadastro-button"
-              type="submit"
+              type="button"
               disabled={loading}
-              aria-busy={loading}
+              onClick={handleSubmit}
             >
               {loading ? 'Enviando...' : 'Solicitar Registro'}
             </button>
+
           </form>
 
-        <p className="login-text">
-            Já possui acesso?
-            <Link to="/"> Fazer Login</Link>
-        </p>
+          <div className="login-text">
+            <span>Já possui acesso?</span>
+
+            <a
+              href="/"
+              className="login-link-button"
+            >
+              Fazer Login
+            </a>
+          </div>
         </div>
       </section>
     </main>
