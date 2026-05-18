@@ -157,7 +157,7 @@
 
   border-radius: 14px;
 
-  background: #00b300;
+  background: #1ac21a;
   color: #ffffff;
 
   text-decoration: none;
@@ -215,7 +215,7 @@
   width: 6px;
   height: 100%;
 
-  background: var(--accent);
+  background: #00b300;
 }
 
 .status-card:hover {
@@ -233,7 +233,7 @@
   align-items: center;
   justify-content: center;
 
-  color: var(--accent);
+  color: #008000;
 }
 
 .status-text {
