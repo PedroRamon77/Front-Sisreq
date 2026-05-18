@@ -6,56 +6,49 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-  font-family: 'Segoe UI', sans-serif;
-}
-
-body {
-  background: #f4f4f4;
-  color: #222;
 }
 
 /* =========================
-   PÁGINA
+   PAGE
 ========================= */
 
 .requerimento-page {
-  width: 100%;
   min-height: 100vh;
+  background: #f5f7fb;
+  font-family: 'Inter', sans-serif;
+  color: #111827;
 
-  padding: 40px 20px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 32px;
 }
 
 /* =========================
-   LINK VOLTAR
+   BACK LINK
 ========================= */
 
 .back-link {
-  width: 100%;
-  max-width: 900px;
-
-  margin-bottom: 20px;
+  max-width: 1400px;
+  margin: 0 auto 20px;
 }
 
 .back-link a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
+
+  width: fit-content;
 
   text-decoration: none;
 
   color: #008000;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.95rem;
 
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 .back-link a:hover {
-  color: #00b33c;
+  color: #00b300;
+  transform: translateX(-2px);
 }
 
 /* =========================
@@ -63,16 +56,29 @@ body {
 ========================= */
 
 .requerimento-card {
-  width: 100%;
-  max-width: 900px;
+  max-width: 1400px;
+  margin: 0 auto;
 
   background: #ffffff;
+  border-radius: 28px;
 
-  border-radius: 20px;
+  padding: 32px;
 
-  padding: 35px;
+  position: relative;
+  overflow: hidden;
+}
 
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+.requerimento-card::before {
+  content: '';
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 6px;
+  height: 100%;
+
+  background: #00b300;
 }
 
 /* =========================
@@ -80,47 +86,52 @@ body {
 ========================= */
 
 .form-header {
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .form-title {
   font-size: 2rem;
-  color: #008000;
+  font-weight: 800;
+
+  color: #111827;
 
   margin-bottom: 10px;
 }
 
 .form-subtitle {
-  color: #666;
-  line-height: 1.5;
+  font-size: 0.96rem;
+  line-height: 1.6;
+
+  color: #4b5563;
 }
 
 /* =========================
-   FORM
+   GRID
 ========================= */
 
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
   gap: 20px;
 }
+
+.full {
+  grid-column: span 2;
+}
+
+/* =========================
+   INPUT GROUP
+========================= */
 
 .input-group {
   display: flex;
   flex-direction: column;
-}
-
-.input-group.full {
-  grid-column: span 2;
+  gap: 8px;
 }
 
 .input-label {
-  margin-bottom: 8px;
-
-  font-size: 0.95rem;
-  font-weight: 600;
-
+  font-size: 0.94rem;
+  font-weight: 700;
   color: #008000;
 }
 
@@ -133,35 +144,51 @@ body {
 .textarea {
   width: 100%;
 
-  border: 2px solid #dcdcdc;
-  border-radius: 12px;
-
-  padding: 12px 14px;
-
-  font-size: 1rem;
-
-  background: #fff;
-
+  border: none;
   outline: none;
 
-  transition: 0.2s;
+  background: #f8fafc;
+
+  border-radius: 16px;
+
+  font-size: 0.95rem;
+  color: #111827;
+
+  transition: 0.2s ease;
+}
+
+.input,
+.select {
+  height: 54px;
+  padding: 0 16px;
+}
+
+.textarea {
+  min-height: 150px;
+  resize: vertical;
+
+  padding: 16px;
+  line-height: 1.6;
 }
 
 .input:focus,
 .select:focus,
 .textarea:focus {
-  border-color: #00b33c;
+  background: #00800023;
 }
 
 .input:disabled {
-  background: #f1f1f1;
-  color: #777;
+  background: #eef2f7;
+  color: #6b7280;
+  cursor: not-allowed;
 }
 
-.textarea {
-  min-height: 130px;
+/* =========================
+   SELECT
+========================= */
 
-  resize: vertical;
+.select {
+  cursor: pointer;
 }
 
 /* =========================
@@ -171,35 +198,35 @@ body {
 .upload-area {
   width: 100%;
 
-  border: 2px dashed #00b33c;
-  border-radius: 15px;
+  border: 2px dashed #00b300;
+  border-radius: 20px;
 
-  padding: 25px;
+  background: #f8fafc;
+
+  padding: 26px 20px;
 
   cursor: pointer;
 
-  transition: 0.2s;
-
-  background: #fafafa;
+  transition: 0.2s ease;
 }
 
 .upload-area:hover {
-  background: #f1fff4;
+  background: #00800023;
 }
 
 .upload-content {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 18px;
 }
 
 .upload-icon {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
 
-  border-radius: 50%;
+  border-radius: 18px;
 
-  background: #e9fbe9;
+  background: #00800023;
   color: #008000;
 
   display: flex;
@@ -208,85 +235,91 @@ body {
 }
 
 .upload-title {
-  font-weight: 600;
-  color: #222;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+
+  margin-bottom: 4px;
 }
 
 .upload-subtitle {
   font-size: 0.9rem;
-  color: #777;
+  color: #6b7280;
 }
 
 /* =========================
-   BOTÕES
+   ACTIONS
 ========================= */
 
 .form-actions {
-  margin-top: 30px;
-
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
+  gap: 14px;
+
+  margin-top: 32px;
 }
 
 .btn-cancelar,
 .btn-enviar {
-  height: 45px;
-
+  height: 50px;
   padding: 0 22px;
 
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
 
   font-size: 0.95rem;
-  font-weight: bold;
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 /* CANCELAR */
 
 .btn-cancelar {
-  background: #ececec;
-  color: #444;
+  background: #ff0000;
+  color: #374151;
 }
 
 .btn-cancelar:hover {
-  background: #dcdcdc;
+  background: #e5e7eb;
 }
 
 /* ENVIAR */
 
 .btn-enviar {
-  background: #008000;
-  color: #fff;
+  background: #1ac21a;
+  color: #ffffff;
 }
 
 .btn-enviar:hover {
-  background: #00a63a;
+  background: #008000;
 }
 
 /* =========================
-   RESPONSIVIDADE
+   RESPONSIVO
 ========================= */
 
-@media (max-width: 768px) {
-  .requerimento-page {
-    padding: 20px 15px;
-  }
-
-  .requerimento-card {
-    padding: 25px 20px;
-  }
+@media (max-width: 992px) {
 
   .form-grid {
     grid-template-columns: 1fr;
   }
 
-  .input-group.full {
+  .full {
     grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .requerimento-page {
+    padding: 22px 16px;
+  }
+
+  .requerimento-card {
+    padding: 22px;
   }
 
   .form-title {
@@ -301,12 +334,22 @@ body {
   .btn-enviar {
     width: 100%;
   }
+
+  .upload-content {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 420px) {
+
+  .requerimento-page {
+    padding: 16px 12px;
+  }
+
   .requerimento-card {
-    border-radius: 15px;
-    padding: 20px 15px;
+    padding: 18px;
+    border-radius: 22px;
   }
 
   .form-title {
@@ -314,13 +357,16 @@ body {
   }
 
   .input,
-  .select,
-  .textarea {
-    font-size: 0.9rem;
+  .select {
+    height: 48px;
   }
 
-  .upload-content {
-    flex-direction: column;
-    text-align: center;
+  .textarea {
+    min-height: 120px;
+  }
+
+  .upload-icon {
+    width: 54px;
+    height: 54px;
   }
 }
