@@ -39,7 +39,7 @@
 
   text-decoration: none;
 
-  color: #008000;
+  color: #00b300;
   font-weight: 700;
   font-size: 0.95rem;
 
@@ -47,8 +47,7 @@
 }
 
 .back-link a:hover {
-  color: #00b300;
-  transform: translateX(-2px);
+  color: #008000;
 }
 
 /* =========================
@@ -278,23 +277,29 @@
 /* CANCELAR */
 
 .btn-cancelar {
-  background: #ff0000;
-  color: #374151;
+  background: #ffffff;
+  color: #ff0000;
+
+  border: 2px solid #ff0000;
 }
 
 .btn-cancelar:hover {
-  background: #e5e7eb;
+  background: #ff0000;
+  color: #ffffff;
 }
 
 /* ENVIAR */
 
 .btn-enviar {
-  background: #1ac21a;
-  color: #ffffff;
+  background: rgb(255, 255, 255);
+  color: #008000;
+
+  border: 2px solid #008000
 }
 
 .btn-enviar:hover {
   background: #008000;
+  color: #ffffff;
 }
 
 /* =========================
