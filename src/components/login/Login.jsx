@@ -3,6 +3,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import api from '../../services/api'
 import './Login.css'
 
+const UserIcon = ({ className }) => (
+  <svg className={className} width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+)
+
 const EyeIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -71,9 +78,9 @@ export default function Login() {
 
       <section className="right-side" aria-label="Formulário de login">
         <div className="overlay" aria-hidden="true" />
-
         <div className="login-card main-card">
           <div className="login-header">
+            <UserIcon className="user-icon" />
             <h2>Login</h2>
 
             <p>

@@ -238,7 +238,7 @@ export default function Cadastro() {
           </form>
 
           <div className="login-text">
-            <span>Já possui acesso?</span>
+            <span>Já possui acesso? </span>
 
             <a
               href="/"
