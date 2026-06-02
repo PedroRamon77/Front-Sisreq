@@ -61,7 +61,7 @@ export default function DashboardAdmin() {
           <Link to="#" className="nav-item">
             Configurações
           </Link>
-          <Link to="#" className="nav-item">
+          <Link to="/analise-requerimento" className="nav-item">
             Solicitações
           </Link>
           <button className="nav-item logout" onClick={handleLogout}>

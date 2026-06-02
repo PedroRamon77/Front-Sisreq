@@ -5,6 +5,7 @@ import Cadastro from './components/cadastro/Cadastro'
 import Dashboard from './components/dashboard/Dashboard'
 import NovoRequerimento from './components/novorequerimento/NovoRequerimento'
 import DashboardAdmin from './components/dashboardAdmin/DashboardAdmin'
+import AnaliseRequerimento from './components/analiseRequerimento/AnaliseRequerimento'
 
 export default function App() {
   return (
@@ -16,6 +17,8 @@ export default function App() {
         <Route path="/dashboard-admin" element={<DashboardAdmin />} />
         <Route path="/esqueci-senha" element={<EsqueciSenha />} />
         <Route path="/novorequerimento" element={<NovoRequerimento />} />
+        <Route path="/analise-requerimento" element={<AnaliseRequerimento />} />
+        <Route path="*" element={<h1>404 - Página Não Encontrada</h1>} />
       </Routes>
     </BrowserRouter>
   )
