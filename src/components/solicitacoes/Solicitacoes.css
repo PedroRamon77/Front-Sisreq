@@ -1,0 +1,307 @@
+/* =========================
+   REUTILIZAÇÃO DA SIDEBAR & LAYOUT BASE
+========================= */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+}
+
+.sidebar {
+  width: 270px;
+  background: #fdfdfd;
+  border-right: 1px solid #e5e7eb;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 50px;
+  padding-left: 10px;
+}
+
+.sidebar-logo h1 span { color: #16a34a; }
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-item {
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #15803d;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-item.active {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.nav-item:hover:not(.active):not(.logout) {
+  background: #f0fdf4;
+}
+
+.nav-item.logout {
+  color: #ef4444; 
+  margin-top: 15px;
+}
+
+.nav-item.logout:hover {
+  background: #fef2f2;
+}
+
+/* =========================
+   CONTEÚDO: SOLICITAÇÕES
+========================= */
+.solicitacoes-content {
+  flex: 1;
+  padding: 50px 60px;
+  background: #f8fafc;
+}
+
+.solicitacoes-header {
+  margin-bottom: 30px;
+}
+
+.solicitacoes-title-group h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 5px;
+}
+
+.solicitacoes-title-group h2 span {
+  color: #16a34a;
+}
+
+.solicitacoes-title-group p {
+  color: #64748b;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* =========================
+   BARRA DE FERRAMENTAS (REAPROVEITADA)
+========================= */
+.users-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0 15px;
+  flex: 1;
+  max-width: 400px;
+  transition: border-color 0.2s;
+}
+
+.search-box:focus-within {
+  border-color: #16a34a;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.filters-group {
+  display: flex;
+  gap: 15px;
+}
+
+.filter-select {
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  border-color: #16a34a;
+}
+
+/* =========================
+   TABELA
+========================= */
+.admin-table-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 18px 25px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-table td {
+  padding: 20px 25px;
+  font-size: 0.95rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+  background: #f0fdf4;
+}
+
+.user-info-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-info-cell strong {
+  color: #0f172a;
+}
+
+.user-info-cell span {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-badge.emanálise {
+  background: #fef9c3; /* Amarelo clarinho */
+  color: #ca8a04;
+}
+
+.status-badge.aprovado {
+  background: #dcfce7; /* Verde clarinho */
+  color: #16a34a;
+}
+
+.status-badge.recusado {
+  background: #fee2e2; /* Vermelho clarinho */
+  color: #ef4444;
+}
+
+.status-badge.atrasado {
+  background: #ffedd5; /* Laranja clarinho */
+  color: #ea580c;
+}
+
+/* =========================
+   BOTÃO AÇÃO
+========================= */
+.btn-ver-detalhes {
+  background: #ffffff;
+  color: #16a34a;
+  border: 1px solid #16a34a;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-ver-detalhes:hover {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+@media (max-width: 1024px) {
+  .users-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-box {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 25px 20px;
+  }
+  
+  .solicitacoes-content {
+    padding: 30px 20px;
+  }
+  
+  .solicitacoes-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .filters-group {
+    flex-direction: column;
+  }
+}

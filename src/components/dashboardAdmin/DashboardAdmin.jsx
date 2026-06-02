@@ -1,14 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
 import './DashboardAdmin.css'
+import SidebarAdmin from '../layout/sidebar/SidebarAdmin' // <-- Importando o nosso menu
 
 export default function DashboardAdmin() {
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('usuario')
-    navigate('/')
-  }
 
   // Dados simulados baseados no protótipo
   const pendencias = [
@@ -45,30 +38,10 @@ export default function DashboardAdmin() {
 
   return (
     <div className="dashboard-container">
+      
       {/* ================= BARRA LATERAL ================= */}
-      <aside className="sidebar">
-        <div className="sidebar-logo">
-          <h1>Sis<span>Req.</span></h1>
-        </div>
-
-        <nav className="sidebar-nav">
-          <Link to="/dashboard-admin" className="nav-item active">
-            Visão Geral
-          </Link>
-          <Link to="/gerenciar-usuarios" className="nav-item">
-            Gerenciar Usuários
-          </Link>
-          <Link to="#" className="nav-item">
-            Configurações
-          </Link>
-          <Link to="/analise-requerimento" className="nav-item">
-            Solicitações
-          </Link>
-          <button className="nav-item logout" onClick={handleLogout}>
-            Sair do Sistema
-          </button>
-        </nav>
-      </aside>
+      {/* Aqui definimos que o item "Visão Geral" deve ficar verde */}
+      <SidebarAdmin itemAtivo="visao-geral" />
 
       {/* ================= CONTEÚDO PRINCIPAL ================= */}
       <main className="main-content admin-content">

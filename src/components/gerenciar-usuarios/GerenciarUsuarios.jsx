@@ -1,16 +1,9 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import './GerenciarUsuarios.css'
+import SidebarAdmin from '../layout/sidebar/SidebarAdmin' // <-- Menu importado!
 
 export default function GerenciarUsuarios() {
-  const navigate = useNavigate()
   const [busca, setBusca] = useState('')
-
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('usuario')
-    navigate('/')
-  }
 
   // Dados simulados de servidores, professores e coordenadores
   const usuarios = [
@@ -50,30 +43,9 @@ export default function GerenciarUsuarios() {
 
   return (
     <div className="dashboard-container">
+      
       {/* ================= BARRA LATERAL ================= */}
-      <aside className="sidebar">
-        <div className="sidebar-logo">
-          <h1>Sis<span>Req.</span></h1>
-        </div>
-
-        <nav className="sidebar-nav">
-          <Link to="/dashboard-admin" className="nav-item">
-            Visão Geral
-          </Link>
-          <Link to="/gerenciar-usuarios" className="nav-item active">
-            Gerenciar Usuários
-          </Link>
-          <Link to="#" className="nav-item">
-            Configurações
-          </Link>
-          <Link to="/analise-requerimento" className="nav-item">
-            Solicitações
-          </Link>
-          <button className="nav-item logout" onClick={handleLogout}>
-            Sair do Sistema
-          </button>
-        </nav>
-      </aside>
+      <SidebarAdmin itemAtivo="gerenciar-usuarios" />
 
       {/* ================= CONTEÚDO PRINCIPAL ================= */}
       <main className="admin-content users-content">
