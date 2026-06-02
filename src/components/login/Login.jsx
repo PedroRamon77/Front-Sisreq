@@ -136,7 +136,7 @@ export default function Login() {
                 <span>Lembrar-me</span>
               </label>
 
-              <a href="#">Esqueci minha senha</a>
+              <a href="/esqueci-senha">Esqueci minha senha</a>
             </div>
 
             <button
