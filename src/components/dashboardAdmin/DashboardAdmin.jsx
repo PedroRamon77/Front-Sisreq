@@ -55,7 +55,7 @@ export default function DashboardAdmin() {
           <Link to="/dashboard-admin" className="nav-item active">
             Visão Geral
           </Link>
-          <Link to="#" className="nav-item">
+          <Link to="/gerenciar-usuarios" className="nav-item">
             Gerenciar Usuários
           </Link>
           <Link to="#" className="nav-item">

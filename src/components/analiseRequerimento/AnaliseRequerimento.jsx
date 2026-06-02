@@ -34,13 +34,13 @@ export default function AnaliseRequerimento() {
           <Link to="/dashboard-admin" className="nav-item">
             Visão Geral
           </Link>
-          <Link to="#" className="nav-item">
+          <Link to="/gerenciar-usuarios" className="nav-item">
             Gerenciar Usuários
           </Link>
           <Link to="#" className="nav-item">
             Configurações
           </Link>
-          <Link to="#" className="nav-item active">
+          <Link to="/analise-requerimento" className="nav-item active">
             Solicitações
           </Link>
           <button className="nav-item logout" onClick={handleLogout}>
