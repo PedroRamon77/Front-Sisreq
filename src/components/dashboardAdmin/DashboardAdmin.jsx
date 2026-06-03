@@ -1,52 +1,59 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import api from '../../services/api'
 import './DashboardAdmin.css'
-import SidebarAdmin from '../layout/sidebar/SidebarAdmin' // <-- Importando o nosso menu
+import SidebarAdmin from '../layout/sidebar/SidebarAdmin'
 
 export default function DashboardAdmin() {
+  const navigate = useNavigate()
 
-  // Dados simulados baseados no protótipo
-  const pendencias = [
-    {
-      id: 1,
-      nome: 'Prof. Carlos Silva',
-      requerimento: 'Ajustar matricula do aluno (Lucas Pereira)',
-      tempoFila: '1 dia',
-      status: 'Aprovado',
-    },
-    {
-      id: 2,
-      nome: 'Prof. jeremias Souza',
-      requerimento: 'Trancamento de curso',
-      tempoFila: '15 dias',
-      status: 'Atrasado',
-    },
-  ]
+  const [loading, setLoading] = useState(true)
 
-  const acessos = [
-    {
-      id: 1,
-      nome: 'Lucas Pereira',
-      vinculo: 'Aluno',
-      permissao: 'Ativo',
-    },
-    {
-      id: 2,
-      nome: 'Neide Costa',
-      vinculo: 'Secretaria',
-      permissao: 'Matriculas parcial',
-    },
-  ]
+  const [dados, setDados] = useState({
+    totalAlunos: 0,
+    totalServidores: 0,
+    totalPendencias: 0,
+    pendencias: [],
+    acessos: [],
+  })
+
+  useEffect(() => {
+    carregarDashboard()
+  }, [])
+
+  async function carregarDashboard() {
+    try {
+      const response = await api.get('/dashboard/admin')
+
+      setDados(response.data)
+    } catch (error) {
+      console.error(error)
+
+      alert('Erro ao carregar dashboard')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="dashboard-container">
+        <SidebarAdmin itemAtivo="visao-geral" />
+
+        <main className="main-content admin-content">
+          <h2>Carregando...</h2>
+        </main>
+      </div>
+    )
+  }
 
   return (
     <div className="dashboard-container">
-      
-      {/* ================= BARRA LATERAL ================= */}
-      {/* Aqui definimos que o item "Visão Geral" deve ficar verde */}
+
       <SidebarAdmin itemAtivo="visao-geral" />
 
-      {/* ================= CONTEÚDO PRINCIPAL ================= */}
       <main className="main-content admin-content">
-        
-        {/* CABEÇALHO */}
+
         <header className="admin-header">
           <div className="admin-title-group">
             <h2>Painel Administrativo</h2>
@@ -55,101 +62,192 @@ export default function DashboardAdmin() {
 
           <div className="admin-profile">
             <div className="admin-info">
-              <strong>Admin Principal</strong>
-              <span>Super Usuário</span>
+              <strong>Administrador</strong>
+              <span>SisReq</span>
             </div>
+
             <div className="admin-avatar-glow"></div>
           </div>
         </header>
 
-        {/* CARDS DE RESUMO */}
         <section className="admin-cards-grid">
+
           <div className="admin-card outline-green">
-            <span className="admin-card-label">TOTAL DE ALUNOS</span>
-            <span className="admin-card-value text-green">1.621</span>
+            <span className="admin-card-label">
+              TOTAL DE ALUNOS
+            </span>
+
+            <span className="admin-card-value text-green">
+              {dados.totalAlunos}
+            </span>
           </div>
+
           <div className="admin-card outline-gray">
-            <span className="admin-card-label">SERVIDORES CADASTRADOS</span>
-            <span className="admin-card-value text-green">40</span>
+            <span className="admin-card-label">
+              SERVIDORES CADASTRADOS
+            </span>
+
+            <span className="admin-card-value text-green">
+              {dados.totalServidores}
+            </span>
           </div>
+
           <div className="admin-card outline-red">
-            <span className="admin-card-label text-red">PENDENCIAS</span>
-            <span className="admin-card-value text-red">13</span>
+            <span className="admin-card-label text-red">
+              PENDÊNCIAS
+            </span>
+
+            <span className="admin-card-value text-red">
+              {dados.totalPendencias}
+            </span>
           </div>
+
         </section>
 
-        {/* TABELA DE PENDÊNCIAS */}
         <section className="admin-table-section">
+
           <div className="table-header">
-            <h3>Pendências de Servidores/Professores</h3>
+            <h3>
+              Pendências de Requerimentos
+            </h3>
           </div>
-          
+
           <div className="table-container">
+
             <table className="admin-table">
+
               <thead>
                 <tr>
-                  <th>Nome:</th>
-                  <th>Requerimento solicitado:</th>
-                  <th>Tempo na Fila</th>
+                  <th>Aluno</th>
+                  <th>Tipo</th>
+                  <th>Protocolo</th>
                   <th>Status</th>
-                  <th>Ação adm</th>
+                  <th>Ação</th>
                 </tr>
               </thead>
+
               <tbody>
-                {pendencias.map((item) => (
-                  <tr key={item.id}>
-                    <td><strong>{item.nome}</strong></td>
-                    <td>{item.requerimento}</td>
-                    <td><strong>{item.tempoFila}</strong></td>
-                    <td>
-                      <span className={`status-pill ${item.status.toLowerCase()}`}>
-                        {item.status}
-                      </span>
-                    </td>
-                    <td>
-                      <button className="btn-action btn-gray">Notificar</button>
+
+                {dados.pendencias.length === 0 ? (
+                  <tr>
+                    <td colSpan="5">
+                      Nenhuma pendência encontrada
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  dados.pendencias.map((item) => (
+                    <tr key={item.id}>
+
+                      <td>
+                        <strong>
+                          {item.usuario?.nome}
+                        </strong>
+                      </td>
+
+                      <td>
+                        {item.tipo}
+                      </td>
+
+                      <td>
+                        {item.protocolo}
+                      </td>
+
+                      <td>
+                        <span
+                          className={`status-pill ${item.status.toLowerCase()}`}
+                        >
+                          {item.status}
+                        </span>
+                      </td>
+
+                      <td>
+                        <button
+                          className="btn-action btn-gray"
+                          onClick={() =>
+                            navigate('/analise-requerimento')
+                          }
+                        >
+                          Analisar
+                        </button>
+                      </td>
+
+                    </tr>
+                  ))
+                )}
+
               </tbody>
+
             </table>
+
           </div>
+
         </section>
 
-        {/* TABELA DE ACESSOS */}
         <section className="admin-table-section">
+
           <div className="table-header flex-between">
-            <h3>Controle de Acessos e Permissões</h3>
-            <button className="btn-gerenciar">Gerenciar usuarios +</button>
+
+            <h3>
+              Controle de Acessos
+            </h3>
+
+            <button
+              className="btn-gerenciar"
+              onClick={() =>
+                navigate('/gerenciar-usuarios')
+              }
+            >
+              Gerenciar usuários +
+            </button>
+
           </div>
-          
+
           <div className="table-container">
+
             <table className="admin-table">
+
               <thead>
                 <tr>
-                  <th>Nome:</th>
-                  <th>Vinculo</th>
-                  <th>Nivel de permissão</th>
-                  <th>Ação adm</th>
+                  <th>Nome</th>
+                  <th>Perfil</th>
+                  <th>Status</th>
                 </tr>
               </thead>
+
               <tbody>
-                {acessos.map((item) => (
+
+                {dados.acessos.map((item) => (
                   <tr key={item.id}>
-                    <td><strong>{item.nome}</strong></td>
-                    <td><strong>{item.vinculo}</strong></td>
-                    <td><strong>{item.permissao}</strong></td>
+
                     <td>
-                      <button className="btn-action btn-light-green">Salvar</button>
+                      <strong>
+                        {item.nome}
+                      </strong>
                     </td>
+
+                    <td>
+                      {item.tipo}
+                    </td>
+
+                    <td>
+                      {item.ativo
+                        ? 'Ativo'
+                        : 'Bloqueado'}
+                    </td>
+
                   </tr>
                 ))}
+
               </tbody>
+
             </table>
+
           </div>
+
         </section>
 
       </main>
+
     </div>
   )
 }

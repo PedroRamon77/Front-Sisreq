@@ -27,6 +27,10 @@ const CrossIcon = () => (
 export default function Dashboard() {
   const navigate = useNavigate()
 
+  const usuario = JSON.parse(localStorage.getItem('usuario'))
+  const tipo = usuario?.tipo
+  const nome = usuario?.nome || 'Usuário'
+
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('usuario')
@@ -65,38 +69,89 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      {/* ================= BARRA LATERAL ================= */}
+
+      {/* SIDEBAR */}
       <aside className="sidebar">
         <div className="sidebar-logo">
           <h1>Sis<span>Req.</span></h1>
         </div>
 
         <nav className="sidebar-nav">
-          <Link to="/dashboard" className="nav-item active">
-            Visão Geral
-          </Link>
-          <Link to="#" className="nav-item">
-            Gerenciar Usuários
-          </Link>
-          <Link to="#" className="nav-item">
-            Configurações
-          </Link>
+
+          {tipo === 'ALUNO' && (
+            <>
+              <Link to="/dashboard" className="nav-item active">
+                Visão Geral
+              </Link>
+
+              <Link to="/novorequerimento" className="nav-item">
+                Novo Requerimento
+              </Link>
+
+              <Link to="/solicitacoes" className="nav-item">
+                Solicitações
+              </Link>
+            </>
+          )}
+
+          {tipo === 'SERVIDOR' && (
+            <>
+              <Link to="/dashboard" className="nav-item active">
+                Visão Geral
+              </Link>
+
+              <Link to="/analise-requerimento" className="nav-item">
+                Análise de Requerimentos
+              </Link>
+            </>
+          )}
+
+          {tipo === 'ADMIN' && (
+            <>
+              <Link to="/dashboard-admin" className="nav-item active">
+                Dashboard Admin
+              </Link>
+
+              <Link to="/gerenciar-usuarios" className="nav-item">
+                Gerenciar Usuários
+              </Link>
+
+              <Link to="/analise-requerimento" className="nav-item">
+                Análise de Requerimentos
+              </Link>
+            </>
+          )}
+
           <button className="nav-item logout" onClick={handleLogout}>
             Sair do Sistema
           </button>
+
         </nav>
       </aside>
 
-      {/* ================= CONTEÚDO PRINCIPAL ================= */}
+      {/* CONTEÚDO */}
       <main className="main-content">
-        <div className="welcome-row">
-          <h2 className="welcome-title">
-            Bem-vindo ao <span>SisReq.</span>
-          </h2>
 
-          <Link to="/novorequerimento" className="btn-novo">
-            + NOVO REQUERIMENTO
-          </Link>
+        <div className="welcome-row">
+          <div>
+            <h2 className="welcome-title">
+              Bem-vindo ao <span>SisReq.</span>
+            </h2>
+
+            <p>
+              Usuário logado: <strong>{nome}</strong>
+            </p>
+
+            <p>
+              Perfil: <strong>{tipo}</strong>
+            </p>
+          </div>
+
+          {tipo === 'ALUNO' && (
+            <Link to="/novorequerimento" className="btn-novo">
+              + NOVO REQUERIMENTO
+            </Link>
+          )}
         </div>
 
         <section className="status-grid">
@@ -115,16 +170,28 @@ export default function Dashboard() {
 
           <div className="notifications-container">
             <ul className="notifications-list">
+
               {notificacoes.map((item) => (
-                <li key={item.id} className={`notification-item ${item.status}`}>
+                <li
+                  key={item.id}
+                  className={`notification-item ${item.status}`}
+                >
                   <div className="notification-content">
                     <div className="notification-item-header">
-                      <strong className="notification-title">{item.titulo}</strong>
-                      <span className="notification-time">{item.horario}</span>
+                      <strong className="notification-title">
+                        {item.titulo}
+                      </strong>
+
+                      <span className="notification-time">
+                        {item.horario}
+                      </span>
                     </div>
-                    <p className="notification-body">{item.descricao}</p>
+
+                    <p className="notification-body">
+                      {item.descricao}
+                    </p>
                   </div>
-                  
+
                   <div className="notification-icon">
                     {item.status === 'sucesso' && <CheckIcon />}
                     {item.status === 'alerta' && <WarningIcon />}
@@ -132,9 +199,11 @@ export default function Dashboard() {
                   </div>
                 </li>
               ))}
+
             </ul>
           </div>
         </section>
+
       </main>
     </div>
   )
