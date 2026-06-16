@@ -278,12 +278,16 @@
 }
 
 .btn-indeferir {
-  background: #fee2e2; /* Fundo vermelho claro */
-  color: #ef4444; /* Texto vermelho escuro */
+  color: white; 
+  background: #ef4444; 
 }
 .btn-indeferir:hover {
-  background: #fca5a5;
-  color: #b91c1c;
+  background: #b91c1c;
+}
+
+.btn-decisao:disabled{
+opacity: 0.2;
+cursor:not-allowed;
 }
 
 /* =========================

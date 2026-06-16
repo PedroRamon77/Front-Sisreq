@@ -169,7 +169,7 @@
 
 /* Variações de Cards */
 .outline-green { border: 1px solid #16a34a; }
-.outline-gray { border: 1px solid #d1d5db; }
+.outline-gray { border: 1px solid #16a34a; }
 .outline-red { border: 1px solid #ef4444; }
 
 .text-green { color: #16a34a; }
@@ -204,19 +204,20 @@
 }
 
 .btn-gerenciar {
-  background: #dcfce7; /* Verde clarinho */
-  color: #16a34a;
-  border: 1px solid #16a34a;
-  padding: 8px 16px;
+  background: #16a34a;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
   border-radius: 20px;
+  font-size: 0.9rem;
   font-weight: 700;
-  font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
 }
 
 .btn-gerenciar:hover {
-  background: #bbf7d0;
+  background: #15803d;
 }
 
 .table-container {

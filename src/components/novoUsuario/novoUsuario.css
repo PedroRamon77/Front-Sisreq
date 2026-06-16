@@ -1,0 +1,243 @@
+/* =========================
+   PAGE
+========================= */
+
+.novo-usuario-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+
+  padding: 32px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.novo-usuario-card {
+  max-width: 900px;
+  margin: 0 auto;
+
+  background: #ffffff;
+  border-radius: 28px;
+
+  padding: 32px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.novo-usuario-card::before {
+  content: '';
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 6px;
+  height: 100%;
+
+  background: #16a34a;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.novo-usuario-header {
+  margin-bottom: 28px;
+}
+
+.novo-usuario-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+
+  color: #111827;
+
+  margin-bottom: 10px;
+}
+
+.novo-usuario-header h2 span {
+  color: #16a34a;
+}
+
+.novo-usuario-header p {
+  font-size: 0.96rem;
+  line-height: 1.6;
+
+  color: #4b5563;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group.full {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #15803d;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.form-group input,
+.form-group select {
+  width: 100%;
+
+  height: 54px;
+  padding: 0 16px;
+
+  border: none;
+  outline: none;
+
+  background: #f8fafc;
+  border-radius: 16px;
+
+  font-size: 0.95rem;
+  color: #111827;
+
+  transition: 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  background: #16a34a15;
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+
+  margin-top: 32px;
+}
+
+.btn-cancelar,
+.btn-salvar {
+  height: 50px;
+  padding: 0 24px;
+
+  border-radius: 14px;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+/* CANCELAR */
+
+.btn-cancelar {
+  background: #ffffff;
+  color: #ef4444;
+
+  border: 2px solid #ef4444;
+}
+
+.btn-cancelar:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* SALVAR */
+
+.btn-salvar {
+  background: #ffffff;
+  color: #16a34a;
+
+  border: 2px solid #16a34a;
+}
+
+.btn-salvar:hover {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.btn-salvar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 768px) {
+  .novo-usuario-page {
+    padding: 22px 16px;
+  }
+
+  .novo-usuario-card {
+    padding: 22px;
+  }
+
+  .novo-usuario-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full {
+    grid-column: span 1;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancelar,
+  .btn-salvar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .novo-usuario-page {
+    padding: 16px 12px;
+  }
+
+  .novo-usuario-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .novo-usuario-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    height: 48px;
+  }
+}

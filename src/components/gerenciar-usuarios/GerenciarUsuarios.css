@@ -99,20 +99,20 @@
   font-size: 1rem;
 }
 
-.btn-novo-usuario {
+.btn-gerenciar {
   background: #16a34a;
-  color: white;
+  color: #ffffff;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
 }
 
-.btn-novo-usuario:hover {
+.btn-gerenciar:hover {
   background: #15803d;
 }
 

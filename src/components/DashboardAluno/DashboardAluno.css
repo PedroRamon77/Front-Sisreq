@@ -1,0 +1,239 @@
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+  flex: 1;
+  padding: 50px 60px;
+  background: #ffffff;
+}
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.welcome-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.welcome-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #16a34a;
+  margin-bottom: 8px;
+}
+
+.welcome-title span {
+  color: #22c55e;
+}
+
+.welcome-row p {
+  color: #15803d;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+.btn-novo {
+  background: #16a34a;
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.btn-novo:hover {
+  background: #15803d;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.status-card {
+  background: #ffffff;
+  border: 1px solid #16a34a;
+  border-radius: 12px;
+
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s;
+}
+
+.status-card:hover {
+  transform: translateY(-2px);
+}
+
+.status-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #15803d;
+  margin-bottom: 12px;
+}
+
+.status-number {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #16a34a;
+  line-height: 1;
+}
+
+/* =========================
+   NOTIFICAÇÕES
+========================= */
+
+.notifications-section {
+  border: 1px solid #16a34a;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.notifications-header {
+  padding: 20px 30px;
+  border-bottom: 1px solid #d1d5db;
+
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.notifications-container {
+  padding: 10px;
+}
+
+.notifications-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 20px 25px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  transition: 0.2s;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item:hover {
+  background: #f9fafb;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 8px;
+}
+
+.notification-title {
+  color: #111827;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.notification-time {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.notification-body {
+  color: #4b5563;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* =========================
+   STATUS DAS NOTIFICAÇÕES
+========================= */
+
+.notification-item.sucesso {
+  border-left: 5px solid #16a34a;
+}
+
+.notification-item.alerta {
+  border-left: 5px solid #f59e0b;
+}
+
+.notification-item.erro {
+  border-left: 5px solid #ef4444;
+}
+
+.notification-icon {
+  margin-left: 20px;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 1024px) {
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .main-content {
+    padding: 30px 20px;
+  }
+
+  .welcome-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .notification-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .notification-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .notification-icon {
+    margin-left: 0;
+  }
+
+  .btn-novo {
+    width: 100%;
+    text-align: center;
+  }
+}

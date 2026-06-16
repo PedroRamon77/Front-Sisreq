@@ -1,0 +1,80 @@
+/* =========================
+   SIDEBAR SERVIDOR
+========================= */
+
+.sidebar {
+  width: 270px;
+  background: #fdfdfd;
+  border-right: 1px solid #e5e7eb;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 50px;
+  padding-left: 10px;
+}
+
+.sidebar-logo h1 span {
+  color: #16a34a;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-item {
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #15803d;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-item.active {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.nav-item:hover:not(.active):not(.logout) {
+  background: #f0fdf4;
+}
+
+.nav-item.logout {
+  color: #ef4444;
+  margin-top: 15px;
+}
+
+.nav-item.logout:hover {
+  background: #fef2f2;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 25px 20px;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

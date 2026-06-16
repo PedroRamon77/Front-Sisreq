@@ -34,26 +34,48 @@ export default function Login() {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+  e.preventDefault()
 
-    try {
-      setLoading(true)
+  try {
+    setLoading(true)
 
-      const response = await api.post('/auth/login', {
-        email,
-        senha: password,
-      })
+    const response = await api.post('/auth/login', {
+      email,
+      senha: password,
+    })
 
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('usuario', JSON.stringify(response.data.usuario))
+    localStorage.setItem(
+      'token',
+      response.data.token
+    )
 
-      navigate('/dashboard')
-    } catch (error) {
-      alert(error.response?.data?.erro || 'Erro ao fazer login')
-    } finally {
-      setLoading(false)
+    localStorage.setItem(
+      'usuario',
+      JSON.stringify(response.data.usuario)
+    )
+
+    const tipo =
+      response.data.usuario.tipo
+
+    if (tipo === 'ADMIN') {
+      navigate('/dashboardadmin')
+    } else if (tipo === 'SERVIDOR') {
+      navigate('/dashboardservidor')
+    } else if (tipo === 'ALUNO') {
+      navigate('/dashboardaluno')
+    }else {
+      navigate('/')
     }
+
+  } catch (error) {
+    alert(
+      error.response?.data?.erro ||
+      'Erro ao fazer login'
+    )
+  } finally {
+    setLoading(false)
   }
+}
 
   return (
     <main className="container">

@@ -194,7 +194,7 @@ export default function DashboardAdmin() {
             <button
               className="btn-gerenciar"
               onClick={() =>
-                navigate('/gerenciar-usuarios')
+                navigate('/gerenciarusuarios')
               }
             >
               Gerenciar usuários +

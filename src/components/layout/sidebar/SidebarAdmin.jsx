@@ -31,7 +31,7 @@ export default function SidebarAdmin({
         {tipo === "SERVIDOR" && (
           <>
             <Link
-              to="/dashboard"
+              to="/dashboardservidor"
               className={`nav-item ${
                 itemAtivo === "visao-geral"
                   ? "active"
@@ -57,7 +57,7 @@ export default function SidebarAdmin({
         {tipo === "ADMIN" && (
           <>
             <Link
-              to="/dashboard-admin"
+              to="/dashboardadmin"
               className={`nav-item ${
                 itemAtivo === "visao-geral"
                   ? "active"
@@ -68,7 +68,7 @@ export default function SidebarAdmin({
             </Link>
 
             <Link
-              to="/gerenciar-usuarios"
+              to="/gerenciarusuarios"
               className={`nav-item ${
                 itemAtivo ===
                 "gerenciar-usuarios"

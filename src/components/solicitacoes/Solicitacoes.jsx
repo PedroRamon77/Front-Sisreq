@@ -1,258 +1,297 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../services/api";
 
 import "./Solicitacoes.css";
+
 import SidebarAdmin from "../layout/sidebar/SidebarAdmin";
+import SidebarServidor from "../layout/sidebar/SidebarServidor";
+import SidebarAluno from "../layout/sidebar/SidebarAluno";
 
 export default function Solicitacoes() {
+
   const navigate = useNavigate();
 
-  const usuario = JSON.parse(
-    localStorage.getItem("usuario")
-  );
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-  const [busca, setBusca] = useState("");
-  const [filtroStatus, setFiltroStatus] =
-    useState("");
-  const [solicitacoes, setSolicitacoes] =
-    useState([]);
+  const [busca,setBusca] = useState("");
+  const [filtroStatus,setFiltroStatus] = useState("");
+  const [solicitacoes,setSolicitacoes] = useState([]);
 
-  async function carregarSolicitacoes() {
-    try {
-      const token =
-        localStorage.getItem("token");
+
+  async function carregarSolicitacoes(){
+
+    try{
 
       const endpoint =
         usuario?.tipo === "ALUNO"
-          ? "http://localhost:3000/requerimentos/meus"
-          : "http://localhost:3000/requerimentos";
+        ? "/requerimentos/meus"
+        : "/requerimentos";
 
-      const response = await axios.get(
-        endpoint,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params:
-            usuario?.tipo === "ALUNO"
-              ? {}
-              : {
-                  busca,
-                  status:
-                    filtroStatus || undefined,
-                },
-        }
-      );
+
+      const response = await api.get(endpoint,{
+        params: usuario?.tipo !== "ALUNO"
+        ? {
+            busca,
+            status:filtroStatus || undefined
+          }
+        : {}
+      });
+
 
       setSolicitacoes(response.data);
-    } catch (error) {
-      console.error(error);
 
-      alert(
-        error.response?.data?.erro ||
-          "Erro ao carregar solicitações"
-      );
+    }catch(error){
+
+      console.error(error);
+      alert("Erro ao carregar solicitações");
+
     }
+
   }
 
-  useEffect(() => {
+
+  useEffect(()=>{
     carregarSolicitacoes();
-  }, [busca, filtroStatus]);
+  },[busca,filtroStatus]);
+
+
+
+  function voltarDashboard(){
+
+    if(usuario?.tipo==="ADMIN")
+      navigate("/dashboardadmin");
+
+    else if(usuario?.tipo==="SERVIDOR")
+      navigate("/dashboardservidor");
+
+    else
+      navigate("/dashboardaluno");
+
+  }
+
+
+
+  function renderSidebar(){
+
+    if(usuario?.tipo==="ADMIN")
+      return <SidebarAdmin itemAtivo="solicitacoes"/>;
+
+
+    if(usuario?.tipo==="SERVIDOR")
+      return <SidebarServidor itemAtivo="solicitacoes"/>;
+
+
+    return <SidebarAluno itemAtivo="solicitacoes"/>;
+
+  }
+
+
 
   return (
+
     <div className="dashboard-container">
-      <SidebarAdmin itemAtivo="solicitacoes" />
+
+      {renderSidebar()}
 
       <main className="admin-content solicitacoes-content">
+
         <header className="solicitacoes-header">
+
+          <button
+            className="btn-voltar"
+            onClick={voltarDashboard}
+          >
+            ← Voltar
+          </button>
+
+
           <div className="solicitacoes-title-group">
+
             <h2>
-              {usuario?.tipo === "ALUNO"
-                ? "Minhas "
-                : "Todas as "}
+              {usuario?.tipo==="ALUNO"
+              ? "Minhas "
+              : "Todas as "}
               <span>Solicitações</span>
             </h2>
 
             <p>
-              {usuario?.tipo === "ALUNO"
-                ? "Acompanhe seus requerimentos acadêmicos."
-                : "Acompanhe e filtre todo o histórico de requerimentos acadêmicos."}
+              Acompanhe os requerimentos acadêmicos.
             </p>
+
           </div>
+
         </header>
 
-        {usuario?.tipo !== "ALUNO" && (
+
+
+        {usuario?.tipo!=="ALUNO" && (
+
           <section className="users-toolbar">
-            <div className="search-box">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#64748b"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="8"
-                ></circle>
 
-                <line
-                  x1="21"
-                  y1="21"
-                  x2="16.65"
-                  y2="16.65"
-                ></line>
-              </svg>
+            <input
+              className="search-box"
+              placeholder="Buscar protocolo ou aluno..."
+              value={busca}
+              onChange={e=>setBusca(e.target.value)}
+            />
 
-              <input
-                type="text"
-                placeholder="Buscar por protocolo, aluno ou curso..."
-                value={busca}
-                onChange={(e) =>
-                  setBusca(e.target.value)
-                }
-              />
-            </div>
 
-            <div className="filters-group">
-              <select
-                className="filter-select"
-                value={filtroStatus}
-                onChange={(e) =>
-                  setFiltroStatus(
-                    e.target.value
-                  )
-                }
-              >
-                <option value="">
-                  Todos os Status
-                </option>
+            <select
+              className="filter-select"
+              value={filtroStatus}
+              onChange={e=>setFiltroStatus(e.target.value)}
+            >
 
-                <option value="ABERTO">
-                  Aberto
-                </option>
+              <option value="">
+                Todos os Status
+              </option>
 
-                <option value="EM_ANALISE">
-                  Em Análise
-                </option>
+              <option value="ABERTO">
+                Aberto
+              </option>
 
-                <option value="AGUARDANDO_AJUSTE">
-                  Aguardando Ajuste
-                </option>
+              <option value="EM_ANALISE">
+                Em análise
+              </option>
 
-                <option value="DEFERIDO">
-                  Deferido
-                </option>
+              <option value="AGUARDANDO_AJUSTE">
+                Aguardando ajuste
+              </option>
 
-                <option value="INDEFERIDO">
-                  Indeferido
-                </option>
+              <option value="DEFERIDO">
+                Deferido
+              </option>
 
-                <option value="CANCELADO">
-                  Cancelado
-                </option>
-              </select>
-            </div>
+              <option value="INDEFERIDO">
+                Indeferido
+              </option>
+
+            </select>
+
           </section>
+
         )}
 
+
+
+
         <section className="admin-table-section">
+
           <div className="table-container">
+
             <table className="admin-table">
+
               <thead>
+
                 <tr>
+
                   <th>Protocolo</th>
 
-                  {usuario?.tipo !==
-                    "ALUNO" && (
-                    <th>
-                      Aluno / Curso
-                    </th>
-                  )}
+                  {usuario?.tipo!=="ALUNO" &&
+                    <th>Aluno</th>
+                  }
 
-                  <th>
-                    Tipo de Solicitação
-                  </th>
-
+                  <th>Tipo</th>
                   <th>Data</th>
-
                   <th>Status</th>
+                  <th>Ação</th>
 
-                  <th>Ações</th>
                 </tr>
+
               </thead>
 
+
+
               <tbody>
-                {solicitacoes.map((req) => (
+
+              {solicitacoes.length===0 ? (
+
+                <tr>
+
+                  <td colSpan="6">
+                    Nenhuma solicitação encontrada
+                  </td>
+
+                </tr>
+
+              ) : (
+
+                solicitacoes.map(req=>(
+
                   <tr key={req.id}>
+
                     <td>
-                      <strong>
-                        {req.protocolo}
-                      </strong>
+                      {req.protocolo}
                     </td>
 
-                    {usuario?.tipo !==
-                      "ALUNO" && (
+
+                    {usuario?.tipo!=="ALUNO" &&
                       <td>
-                        <div className="user-info-cell">
-                          <strong>
-                            {
-                              req.usuario
-                                ?.nome
-                            }
-                          </strong>
-
-                          <span>
-                            {
-                              req.cursoAtual
-                            }
-                          </span>
-                        </div>
+                        {req.usuario?.nome}
                       </td>
-                    )}
+                    }
 
-                    <td>{req.tipo}</td>
+
+                    <td>
+                      {req.tipo}
+                    </td>
+
 
                     <td>
                       {new Date(
                         req.criadoEm
-                      ).toLocaleDateString(
-                        "pt-BR"
-                      )}
+                      ).toLocaleDateString("pt-BR")}
                     </td>
 
+
                     <td>
-                      <span
-                        className={`status-badge ${req.status.toLowerCase()}`}
-                      >
+
+                      <span className={
+                        `status-badge ${req.status.toLowerCase()}`
+                      }>
                         {req.status}
                       </span>
+
                     </td>
 
+
                     <td>
+
                       <button
                         className="btn-ver-detalhes"
-                        onClick={() =>
-                          navigate(
-                            `/analise-requerimento/${req.id}`
-                          )
+                        onClick={()=>
+                          navigate(`/analiserequerimento/${req.id}`, {
+                            state:{
+                                origem:"solicitacoes"
+                              }
+                          })
                         }
                       >
-                        Ver Detalhes
+                        Ver
                       </button>
+
                     </td>
+
+
                   </tr>
-                ))}
+
+                ))
+
+              )}
+
               </tbody>
+
             </table>
+
           </div>
+
         </section>
+
       </main>
+
     </div>
+
   );
+
 }
