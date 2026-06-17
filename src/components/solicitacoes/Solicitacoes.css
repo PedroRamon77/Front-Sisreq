@@ -82,12 +82,12 @@
 .solicitacoes-title-group h2 {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #111827;
+  color: #16a34a;
   margin-bottom: 5px;
 }
 
 .solicitacoes-title-group h2 span {
-  color: #16a34a;
+  color: #22c55e;
 }
 
 .solicitacoes-title-group p {
@@ -225,33 +225,44 @@ box-shadow:0 0 0 3px #dcfce7;
 /* =========================
    STATUS BADGES
 ========================= */
-.status-badge {
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  display: inline-block;
-  text-align: center;
+
+.status-badge{
+padding:6px 14px;
+border-radius:20px;
+font-size:.8rem;
+font-weight:700;
+display:inline-block;
+text-align:center;
 }
 
-.status-badge.emanálise {
-  background: #fef9c3; /* Amarelo clarinho */
-  color: #ca8a04;
+/* ABERTO */
+.status-badge.aberto{
+background:#dcfce7;
+color:#16a34a;
 }
 
-.status-badge.aprovado {
-  background: #dcfce7; /* Verde clarinho */
-  color: #16a34a;
+/* EM ANALISE */
+.status-badge.em_analise{
+background:#fef9c3;
+color:#ca8a04;
 }
 
-.status-badge.recusado {
-  background: #fee2e2; /* Vermelho clarinho */
-  color: #ef4444;
+/* AGUARDANDO AJUSTE */
+.status-badge.aguardando_ajuste{
+background:#fef3c7;
+color:#d97706;
 }
 
-.status-badge.atrasado {
-  background: #ffedd5; /* Laranja clarinho */
-  color: #ea580c;
+/* DEFERIDO */
+.status-badge.deferido{
+background:#dcfce7;
+color:#16a34a;
+}
+
+/* INDEFERIDO */
+.status-badge.indeferido{
+background:#fee2e2;
+color:#ef4444;
 }
 
 /* =========================
