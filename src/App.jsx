@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import EsqueciSenha from "./components/esquecisenha/EsqueciSenha";
+import RedefinirSenha from "./components/esquecisenha/RedefinirSenha";
 import Login from "./components/login/Login";
 import Cadastro from "./components/cadastro/Cadastro";
 
@@ -12,7 +13,6 @@ import NovoRequerimento from "./components/novorequerimento/NovoRequerimento";
 
 import Solicitacoes from "./components/solicitacoes/Solicitacoes";
 import AnaliseRequerimento from "./components/analiseRequerimento/AnaliseRequerimento";
-
 import GerenciarUsuarios from "./components/gerenciar-usuarios/GerenciarUsuarios";
 import NovoUsuario from "./components/novoUsuario/novoUsuario";
 
@@ -28,6 +28,11 @@ export default function App() {
         <Route path="/cadastro" element={<Cadastro />} />
 
         <Route path="/esqueci-senha" element={<EsqueciSenha />} />
+
+        <Route
+          path="/redefinir-senha/:token"
+          element={<RedefinirSenha />}
+        />
 
         <Route
           path="/dashboardAluno"
@@ -59,7 +64,7 @@ export default function App() {
         <Route
           path="/solicitacoes"
           element={
-            <ProtectedRoute tiposPermitidos={["SERVIDOR","ADMIN","ALUNO"]}>
+            <ProtectedRoute tiposPermitidos={["SERVIDOR", "ADMIN", "ALUNO"]}>
               <Solicitacoes />
             </ProtectedRoute>
           }
@@ -68,7 +73,7 @@ export default function App() {
         <Route
           path="/analiserequerimento/:id"
           element={
-            <ProtectedRoute tiposPermitidos={["ALUNO","SERVIDOR","ADMIN"]}>
+            <ProtectedRoute tiposPermitidos={["ALUNO", "SERVIDOR", "ADMIN"]}>
               <AnaliseRequerimento />
             </ProtectedRoute>
           }
