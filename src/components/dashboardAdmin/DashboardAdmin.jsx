@@ -164,7 +164,14 @@ export default function DashboardAdmin() {
                         <button
                           className="btn-action btn-gray"
                           onClick={() =>
-                            navigate('/analise-requerimento')
+                            navigate(
+                              `/analiserequerimento/${item.id}`,
+                              {
+                                state: {
+                                  origem: "dashboard-admin",
+                                },
+                              }
+                            )
                           }
                         >
                           Analisar

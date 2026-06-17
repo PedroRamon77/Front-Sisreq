@@ -68,7 +68,7 @@ export default function App() {
         <Route
           path="/analiserequerimento/:id"
           element={
-            <ProtectedRoute tiposPermitidos={["SERVIDOR","ADMIN"]}>
+            <ProtectedRoute tiposPermitidos={["ALUNO","SERVIDOR","ADMIN"]}>
               <AnaliseRequerimento />
             </ProtectedRoute>
           }

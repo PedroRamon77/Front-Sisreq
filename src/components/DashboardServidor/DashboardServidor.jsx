@@ -206,7 +206,7 @@ export default function DashboardServidor() {
                           className="btn-action btn-gray"
                           onClick={() =>
                             navigate(
-                              `/analiseRequerimento/${item.id}`
+                              `/analise-requerimento/${item.id}`
                             )
                           }
                         >

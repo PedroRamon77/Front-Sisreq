@@ -258,19 +258,21 @@ export default function Solicitacoes() {
 
                     <td>
 
-                      <button
-                        className="btn-ver-detalhes"
-                        onClick={()=>
-                          navigate(`/analiserequerimento/${req.id}`, {
-                            state:{
-                                origem:"solicitacoes"
-                              }
-                          })
-                        }
-                      >
-                        Ver
-                      </button>
-
+<button
+  className="btn-ver-detalhes"
+  onClick={() =>
+    navigate(
+      `/analiserequerimento/${req.id}`,
+      {
+        state: {
+          origem: "solicitacoes",
+        },
+      }
+    )
+  }
+>
+  Ver
+</button>
                     </td>
 
 

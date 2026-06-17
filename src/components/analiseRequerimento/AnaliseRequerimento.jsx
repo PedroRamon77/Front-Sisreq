@@ -1,249 +1,360 @@
-import { useNavigate,useParams } from "react-router-dom";
-import { useEffect,useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import api from "../../services/api";
+
 import SidebarServidor from "../layout/sidebar/SidebarServidor";
+import SidebarAdmin from "../layout/sidebar/SidebarAdmin";
+import SidebarAluno from "../layout/sidebar/SidebarAluno";
+
 import "./AnaliseRequerimento.css";
 
-export default function AnaliseRequerimento(){
+export default function AnaliseRequerimento() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const usuario = JSON.parse(
+    localStorage.getItem("usuario")
+  );
+
+  const podeAnalisar =
+    usuario?.tipo === "ADMIN" ||
+    usuario?.tipo === "SERVIDOR";
+
+  const [requerimento, setRequerimento] =
+    useState(null);
+
+  async function carregarRequerimento() {
+    try {
+      const response = await api.get(
+        `/requerimentos/${id}`
+      );
+
+      setRequerimento(response.data);
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        error.response?.data?.erro ||
+          "Erro ao carregar requerimento"
+      );
+    }
+  }
+
+  async function atualizarStatus(status) {
+    try {
+      const response = await api.patch(
+        `/requerimentos/${id}/status`,
+        { status }
+      );
+
+      alert(response.data.mensagem);
+
+      await carregarRequerimento();
+
+      navigate("/solicitacoes");
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        error.response?.data?.erro ||
+          "Erro ao atualizar status"
+      );
+    }
+  }
+
+  useEffect(() => {
+    carregarRequerimento();
+  }, [id]);
+
+  function renderSidebar() {
+    if (usuario?.tipo === "ADMIN") {
+      return (
+        <SidebarAdmin
+          itemAtivo="solicitacoes"
+        />
+      );
+    }
+
+    if (usuario?.tipo === "SERVIDOR") {
+      return (
+        <SidebarServidor
+          itemAtivo="solicitacoes"
+        />
+      );
+    }
+
+    return (
+      <SidebarAluno
+        itemAtivo="solicitacoes"
+      />
+    );
+  }
+
+  if (!requerimento) {
+    return (
+      <div className="dashboard-container">
+        {renderSidebar()}
+
+        <main className="admin-content">
+          <h2>Carregando...</h2>
+        </main>
+      </div>
+    );
+  }
+
+  const finalizado = [
+    "DEFERIDO",
+    "INDEFERIDO",
+    "CANCELADO",
+  ].includes(requerimento.status);
+
+  return (
+    <div className="dashboard-container">
 
-const navigate=useNavigate();
-const {id}=useParams();
+      {renderSidebar()}
 
-const [requerimento,setRequerimento]=useState(null);
+      <main className="admin-content">
 
-async function carregarRequerimento(){
-try{
-const response=await api.get(`/requerimentos/${id}`);
-setRequerimento(response.data);
-}catch(error){
-console.error(error);
-alert("Erro ao carregar requerimento");
-}
-}
+        <header className="analise-header">
 
-async function atualizarStatus(status){
-try{
-const response=await api.patch(
-`/requerimentos/${id}/status`,
-{status}
-);
+          <button
+            className="btn-voltar"
+            onClick={() =>
+              navigate("/solicitacoes")
+            }
+          >
+            ← Voltar
+          </button>
 
-alert(response.data.mensagem);
-await carregarRequerimento();
-navigate("/solicitacoes");
+          <div className="analise-title-group">
 
-}catch(error){
-console.error(error);
-alert(error.response?.data?.erro||"Erro ao atualizar status");
-}
-}
+            <h2>
+              {podeAnalisar
+                ? "Analisar Requerimento"
+                : "Detalhes do Requerimento"}
 
-useEffect(()=>{
-carregarRequerimento();
-},[id]);
+              <span>
+                {" "}
+                {requerimento.protocolo}
+              </span>
+            </h2>
 
+            <p>
+              Revise as informações do
+              requerimento.
+            </p>
 
-if(!requerimento){
-return(
-<div className="dashboard-container">
-<SidebarServidor itemAtivo="solicitacoes"/>
-<main className="admin-content">
-<h2>Carregando...</h2>
-</main>
-</div>
-);
-}
+          </div>
 
+        </header>
 
-const finalizado=[
-"DEFERIDO",
-"INDEFERIDO",
-"CANCELADO"
-].includes(requerimento.status);
+        <div className="analise-grid">
 
+          <div>
 
-return(
-<div className="dashboard-container">
+            <section className="info-section">
 
-<SidebarServidor itemAtivo="solicitacoes"/>
+              <h3>Dados do Aluno</h3>
 
-<main className="admin-content">
+              <div className="info-grid">
 
-<header className="analise-header">
+                <div className="info-box">
+                  <label>Nome</label>
 
-<button
-className="btn-voltar"
-onClick={()=>navigate("/solicitacoes")}
->
-← Voltar
-</button>
+                  <p>
+                    {
+                      requerimento.usuario
+                        ?.nome
+                    }
+                  </p>
+                </div>
 
-<div className="analise-title-group">
+                <div className="info-box">
+                  <label>
+                    Matrícula
+                  </label>
 
-<h2>
-Analisar Requerimento
-<span> {requerimento.protocolo}</span>
-</h2>
+                  <p>
+                    {
+                      requerimento.usuario
+                        ?.matricula
+                    }
+                  </p>
+                </div>
 
-<p>
-Revise as informações antes da decisão.
-</p>
+                <div className="info-box">
+                  <label>Curso</label>
 
-</div>
+                  <p>
+                    {
+                      requerimento.cursoAtual
+                    }
+                  </p>
+                </div>
 
-</header>
+              </div>
 
+            </section>
 
-<div className="analise-grid">
+            <section className="info-section">
 
+              <h3>
+                Detalhes do Requerimento
+              </h3>
 
-<div>
+              <div className="info-grid">
 
-<section className="info-section">
+                <div className="info-box">
+                  <label>Tipo</label>
 
-<h3>Dados do Aluno</h3>
+                  <p>
+                    {requerimento.tipo}
+                  </p>
+                </div>
 
-<div className="info-grid">
+                <div className="info-box">
+                  <label>Data</label>
 
-<div className="info-box">
-<label>Nome</label>
-<p>{requerimento.usuario?.nome}</p>
-</div>
+                  <p>
+                    {new Date(
+                      requerimento.criadoEm
+                    ).toLocaleDateString(
+                      "pt-BR"
+                    )}
+                  </p>
+                </div>
 
-<div className="info-box">
-<label>Matrícula</label>
-<p>{requerimento.usuario?.matricula}</p>
-</div>
+                <div className="info-box">
+                  <label>Status</label>
+
+                  <p>
+                    {requerimento.status}
+                  </p>
+                </div>
+
+              </div>
+
+              <div className="info-box">
+
+                <label>
+                  Justificativa
+                </label>
+
+                <div className="justificativa-box">
+                  {
+                    requerimento.descricao
+                  }
+                </div>
+
+              </div>
+
+            </section>
+
+          </div>
+
+          <aside>
+
+            <section className="info-section">
 
-<div className="info-box">
-<label>Curso</label>
-<p>{requerimento.cursoAtual}</p>
-</div>
+              <h3>Documentos</h3>
 
-</div>
+              {requerimento.anexos
+                ?.length === 0 && (
+                <p>
+                  Nenhum documento.
+                </p>
+              )}
 
-</section>
+              {requerimento.anexos?.map(
+                (anexo) => (
+                  <div
+                    className="document-card"
+                    key={anexo.id}
+                  >
 
+                    <span>
+                      {
+                        anexo.nomeArquivo
+                      }
+                    </span>
 
-<section className="info-section">
+                    <a
+                      href={`http://localhost:3000/uploads/${anexo.caminho}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Baixar
+                    </a>
 
-<h3>Detalhes do Requerimento</h3>
+                  </div>
+                )
+              )}
 
-<div className="info-grid">
+            </section>
 
-<div className="info-box">
-<label>Tipo</label>
-<p>{requerimento.tipo}</p>
-</div>
+            {podeAnalisar && (
 
-<div className="info-box">
-<label>Data</label>
-<p>
-{new Date(requerimento.criadoEm).toLocaleDateString("pt-BR")}
-</p>
-</div>
+              <section className="info-section">
 
-<div className="info-box">
-<label>Status</label>
-<p>{requerimento.status}</p>
-</div>
+                <h3>Decisão</h3>
 
-</div>
+                <div className="action-buttons">
 
+                  <button
+                    disabled={
+                      finalizado
+                    }
+                    className="btn-decisao btn-deferir"
+                    onClick={() =>
+                      atualizarStatus(
+                        "DEFERIDO"
+                      )
+                    }
+                  >
+                    Deferir
+                  </button>
 
-<div className="info-box">
+                  <button
+                    disabled={
+                      finalizado
+                    }
+                    className="btn-decisao btn-ajuste"
+                    onClick={() =>
+                      atualizarStatus(
+                        "AGUARDANDO_AJUSTE"
+                      )
+                    }
+                  >
+                    Solicitar Ajuste
+                  </button>
 
-<label>Justificativa</label>
+                  <button
+                    disabled={
+                      finalizado
+                    }
+                    className="btn-decisao btn-indeferir"
+                    onClick={() =>
+                      atualizarStatus(
+                        "INDEFERIDO"
+                      )
+                    }
+                  >
+                    Indeferir
+                  </button>
 
-<div className="justificativa-box">
-{requerimento.descricao}
-</div>
+                </div>
 
-</div>
+              </section>
 
-</section>
+            )}
 
-</div>
+          </aside>
 
+        </div>
 
-<aside>
+      </main>
 
-<section className="info-section">
-
-<h3>Documentos</h3>
-
-{requerimento.anexos?.length===0&&(
-<p>Nenhum documento.</p>
-)}
-
-{requerimento.anexos?.map(anexo=>(
-
-<div
-className="document-card"
-key={anexo.id}
->
-
-<span>
-{anexo.nomeArquivo}
-</span>
-
-<a
-href={`http://localhost:3000/uploads/${anexo.caminho}`}
-target="_blank"
-rel="noreferrer"
->
-Baixar
-</a>
-
-</div>
-
-))}
-
-</section>
-
-
-<section className="info-section">
-
-<h3>Decisão</h3>
-
-<div className="action-buttons">
-
-<button
-disabled={finalizado}
-className="btn-decisao btn-deferir"
-onClick={()=>atualizarStatus("DEFERIDO")}
->
-Deferir
-</button>
-
-<button
-disabled={finalizado}
-className="btn-decisao btn-ajuste"
-onClick={()=>atualizarStatus("AGUARDANDO_AJUSTE")}
->
-Solicitar Ajuste
-</button>
-
-<button
-disabled={finalizado}
-className="btn-decisao btn-indeferir"
-onClick={()=>atualizarStatus("INDEFERIDO")}
->
-Indeferir
-</button>
-
-</div>
-
-</section>
-
-</aside>
-
-
-</div>
-
-</main>
-
-</div>
-);
-
+    </div>
+  );
 }
